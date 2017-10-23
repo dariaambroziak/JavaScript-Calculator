@@ -2,7 +2,7 @@
 (function() {
   "use strict";
 
-  // Get elements
+  //------GET ELEMENTS----------//
   var el = function(element) {
     if (element.charAt(0) === "#") {
       return document.querySelector(element);
@@ -12,7 +12,7 @@
     return document.querySelectorAll(element);
   };
 
-  // Variables
+  //------VARIABLES----------//
   var viewer = el("#viewer"),
     equals = el("#equals"),
     nums = el(".num"),
@@ -22,7 +22,7 @@
     resultNum,
     operator;
 
-  // Number is clicked. Get the current number selected
+  //------NUMBER IS CLICKED. GET THE CURRENT NUMBER SELECTED----------//
   var setNum = function() {
     if (resultNum) {
       theNum = this.getAttribute("data-num");
@@ -35,7 +35,7 @@
 
   };
 
-  // Operator is clicked. Pass number to oldNum and save operator
+  //------OPERATOR IS CLICKED. PASS NUMBER TO oldNum AND SAVE OPERATOR----------//
   var moveNum = function() {
     oldNum = theNum;
     theNum = "";
@@ -44,14 +44,13 @@
     equals.setAttribute("data-result", "");
   };
 
-  // Equals is clicked. Calculate result
+  //------EQUALS IS CLICKED. CALCULATE RESULT----------//
   var displayNum = function() {
 
-    // Convert string input to numbers
     oldNum = parseFloat(oldNum);
     theNum = parseFloat(theNum);
 
-    // Perform operation
+    //------PERFORM OPERATION----------//
     switch (operator) {
       case "plus":
         resultNum = oldNum + theNum;
@@ -74,7 +73,7 @@
         resultNum = theNum;
     }
 
-    // If NaN or Infinity returned
+    //------IF NaN OR INFINITY RETURNED----------//
     if (!isFinite(resultNum)) {
       if (isNaN(resultNum)) {
         resultNum = "0";
@@ -84,18 +83,17 @@
 
       }
     }
-
-    // Display result
+    //------RESULT----------//
     viewer.innerHTML = resultNum;
     equals.setAttribute("data-result", resultNum);
 
-    // Now reset oldNum & keep result
+    //------NOW RESET oldNum & KEEP RESULT----------//
     oldNum = 0;
     theNum = resultNum;
 
   };
 
-  // Clear button is pressed.
+  //------CLEAR BUTTON----------//
   var clearAll = function() {
     oldNum = "";
     theNum = "";
@@ -103,20 +101,20 @@
     equals.setAttribute("data-result", resultNum);
   };
 
-  // Add click event to numbers
+  //------EVENT TO NUMBERS----------//
   for (var i = 0, l = nums.length; i < l; i++) {
     nums[i].onclick = setNum;
   }
 
-  // Add click event to operators
+  //------EVENT TO OPERATORS----------//
   for (var i = 0, l = ops.length; i < l; i++) {
     ops[i].onclick = moveNum;
   }
 
-  // Add click event to equal sign
+  //------EVENT TO EQUAL SIGN----------//
   equals.onclick = displayNum;
 
-  // Add click event to clear button
+  //------CLEAR BUTTON----------//
   el("#clear").onclick = clearAll;
 
 }());
